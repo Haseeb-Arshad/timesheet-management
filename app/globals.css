@@ -1,35 +1,76 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-primary: #1d4ed8; /* Blue-700/600 approx */
+  --color-brand-primary: #1d4ed8;
+  /* Blue-700/600 approx */
   --color-brand-secondary: #eff6ff;
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
 
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-primary: var(--primary-blue);
+  --color-primary-foreground: #ffffff;
+
   @keyframes accordion-down {
-    from { height: 0 }
-    to { height: var(--radix-accordion-content-height) }
+    from {
+      height: 0
+    }
+
+    to {
+      height: var(--radix-accordion-content-height)
+    }
   }
+
   @keyframes accordion-up {
-    from { height: var(--radix-accordion-content-height) }
-    to { height: 0 }
+    from {
+      height: var(--radix-accordion-content-height)
+    }
+
+    to {
+      height: 0
+    }
   }
 }
 
 :root {
   /* Core brand colors extracted from the image */
-  --primary-blue: #2563EB; /* A vibrant blue */
-  --primary-dark: #1E40AF; 
-  
+  --primary-blue: #2563EB;
+  /* A vibrant blue */
+  --primary-dark: #1E40AF;
+
   --background: #ffffff;
-  --foreground: #0f172a; /* Slate 900 */
-  
+  --foreground: #0f172a;
+
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+
+  --primary: #2563EB;
+  --primary-foreground: #f8fafc;
+
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+
   --muted: #f1f5f9;
   --muted-foreground: #64748b;
-  
+
+  --accent: #f1f5f9;
+  --accent-foreground: #0f172a;
+
+  --destructive: #ef4444;
+  --destructive-foreground: #f8fafc;
+
   --border: #e2e8f0;
   --input: #e2e8f0;
-  
+  --ring: #94a3b8;
+
   --radius: 0.5rem;
 }
 
