@@ -126,7 +126,7 @@ export default function LoginPage() {
             </div>
 
             {/* Right Column - Brand */}
-            <div className="hidden lg:flex flex-col justify-center px-16 bg-[var(--primary-blue)] text-white relative overflow-hidden">
+            <div className="hidden lg:flex flex-col justify-center px-16 bg-[#1C64F2] text-white relative overflow-hidden">
                 {/* Decorative circle/gradient if needed, for now just clean blue as per image */}
                 <div className="max-w-xl space-y-6 z-10">
                     <h2 className="text-5xl font-bold tracking-tight">ticktock</h2>

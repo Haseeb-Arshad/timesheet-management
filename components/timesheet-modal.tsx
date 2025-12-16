@@ -131,18 +131,30 @@ export function TimesheetModal({
                         )}
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="dateRange" className="text-right">
-                            Date Range
+                        <Label htmlFor="startDate" className="text-right text-gray-700">
+                            Start Date
                         </Label>
                         <Input
-                            id="dateRange"
-                            className="col-span-3"
+                            id="startDate"
+                            type="date"
+                            className="col-span-3 h-10 rounded-lg border-gray-200"
                             disabled={isView}
                             {...register("dateRange")}
                         />
                         {errors.dateRange && (
                             <p className="col-span-4 text-right text-xs text-red-500">{errors.dateRange.message}</p>
                         )}
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="endDate" className="text-right text-gray-700">
+                            End Date
+                        </Label>
+                        <Input
+                            id="endDate"
+                            type="date"
+                            className="col-span-3 h-10 rounded-lg border-gray-200"
+                            disabled={isView}
+                        />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="hours" className="text-right">
