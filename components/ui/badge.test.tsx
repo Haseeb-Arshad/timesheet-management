@@ -13,12 +13,12 @@ describe("Badge", () => {
     it("renders with completed status variant", () => {
         render(<Badge variant="completed">Completed</Badge>)
         const badge = screen.getByText("Completed")
-        expect(badge.className).toContain("bg-emerald-100")
+        expect(badge.className).toContain("bg-[rgba(222,247,236,1)]")
     })
 
     it("renders with missing status variant", () => {
         render(<Badge variant="missing">Missing</Badge>)
         const badge = screen.getByText("Missing")
-        expect(badge.className).toContain("bg-pink-100")
+        expect(badge.className).toContain("bg-[rgba(252,232,243,1)]")
     })
 })

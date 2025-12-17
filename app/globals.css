@@ -198,3 +198,97 @@ body {
     @apply bg-background text-foreground;
   }
 }
+/* Custom Date Input Styling */
+input[type="date"] {
+  position: relative;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid #E5E7EB;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  color: #374151;
+  transition: all 0.2s ease;
+}
+
+input[type="date"]:hover {
+  border-color: #D1D5DB;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+input[type="date"]:focus {
+  outline: none;
+  border-color: #2563EB;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+input[type="date"]:disabled {
+  background-color: #F9FAFB;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Style the calendar icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  padding: 4px;
+  margin-left: 4px;
+  border-radius: 4px;
+  background-color: transparent;
+  opacity: 0.6;
+  transition: all 0.2s ease;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+  background-color: #F3F4F6;
+}
+
+/* Date picker dropdown styling (WebKit browsers) */
+::-webkit-datetime-edit {
+  padding: 0;
+}
+
+::-webkit-datetime-edit-fields-wrapper {
+  background-color: transparent;
+}
+
+::-webkit-datetime-edit-text {
+  color: #9CA3AF;
+  padding: 0 2px;
+}
+
+::-webkit-datetime-edit-month-field,
+::-webkit-datetime-edit-day-field,
+::-webkit-datetime-edit-year-field {
+  color: #374151;
+}
+
+::-webkit-datetime-edit-month-field:focus,
+::-webkit-datetime-edit-day-field:focus,
+::-webkit-datetime-edit-year-field:focus {
+  background-color: #EFF6FF;
+  border-radius: 2px;
+  outline: none;
+}
+
+/* Custom select/dropdown styling for consistency */
+select {
+  background-image: none;
+}
+
+select option {
+  background-color: white;
+  color: #374151;
+  padding: 8px 12px;
+}
+
+select option:hover,
+select option:focus {
+  background-color: #F3F4F6;
+}
+
+select option:checked {
+  background-color: #EFF6FF;
+  color: #1D4ED8;
+}

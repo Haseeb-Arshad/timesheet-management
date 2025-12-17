@@ -15,10 +15,30 @@ export interface DailyTask {
     description: string;
     hours: number;
     projectName: string;
+    typeOfWork?: string;
 }
 
 export interface TimesheetDetails extends TimesheetSummary {
     tasks: DailyTask[];
+}
+
+export interface PaginatedResponse<T> {
+    data: T[];
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+}
+
+export interface TimesheetParams {
+    page?: number;
+    limit?: number;
+    status?: string | null;
+    dateStart?: string | null;
+    dateEnd?: string | null;
+    sortField?: string | null;
+    sortOrder?: 'asc' | 'desc';
+    token?: string; // Auth token
 }
 
 // Deterministic random number generator for consistency
@@ -69,7 +89,16 @@ export function getTimesheet(id: number): TimesheetSummary | null {
     };
 }
 
-export function getTimesheetDetails(id: number): TimesheetDetails | null {
+export async function getTimesheetDetails(id: number, token?: string): Promise<TimesheetDetails | null> {
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 300));
+
+    // To implement real API:
+    // const res = await fetch(`https://api.example.com/timesheets/${id}`, {
+    //   headers: { Authorization: `Bearer ${token}` }
+    // })
+    // return res.json()
+
     const summary = getTimesheet(id);
     if (!summary) return null;
 
@@ -91,13 +120,93 @@ export function getTimesheetDetails(id: number): TimesheetDetails | null {
                 date: new Date(date), // Copy date
                 description: "Homepage Development", // Placeholder as in design
                 hours: 4, // Placeholder
-                projectName: "Project Name"
+                projectName: "Project Name",
+                typeOfWork: "Feature Development"
             });
         }
     }
 
     return {
         ...summary,
-        tasks
+        tasks,
+        hours: tasks.reduce((sum, t) => sum + t.hours, 0),
+        status: tasks.reduce((sum, t) => sum + t.hours, 0) >= 40 ? "completed" : tasks.reduce((sum, t) => sum + t.hours, 0) > 0 ? "incomplete" : "missing"
+    };
+}
+
+export async function getAllTimesheets(params?: TimesheetParams): Promise<PaginatedResponse<TimesheetSummary>> {
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    // To implement real API:
+    // const query = new URLSearchParams(params as any).toString();
+    // const res = await fetch(`https://api.example.com/timesheets?${query}`, {
+    //   headers: { Authorization: `Bearer ${params?.token}` }
+    // })
+    // return res.json()
+
+    let allData = Array.from({ length: 200 }).map((_, i) => {
+        const id = i + 1;
+        const summary = getTimesheet(id);
+        if (!summary) throw new Error("Failed to generate timesheet");
+        return summary;
+    });
+
+    // 1. Filter
+    if (params?.status && params.status !== "all") {
+        allData = allData.filter(t => t.status === params.status);
+    }
+    if (params?.dateStart && params?.dateEnd) {
+        const start = new Date(params.dateStart);
+        const end = new Date(params.dateEnd);
+        allData = allData.filter(t => t.startDate <= end && t.endDate >= start);
+    }
+
+    // 2. Sort
+    if (params?.sortField) {
+        const field = params.sortField as keyof TimesheetSummary;
+        const order = params.sortOrder || 'asc';
+
+        allData.sort((a, b) => {
+            let aVal = a[field];
+            let bVal = b[field];
+
+            if (field === 'dateRange') {
+                aVal = a.startDate.getTime();
+                bVal = b.startDate.getTime();
+            }
+
+            if (aVal === bVal) return 0;
+            const res = aVal > bVal ? 1 : -1;
+            return order === 'asc' ? res : -res;
+        });
+    }
+
+    // 3. Paginate
+    const page = params?.page || 1;
+    const limit = params?.limit || 5;
+    const total = allData.length;
+    const totalPages = Math.ceil(total / limit);
+    const startIdx = (page - 1) * limit;
+
+    // Safety check
+    if (startIdx >= total && page > 1) {
+        return {
+            data: [],
+            total,
+            page,
+            limit,
+            totalPages
+        }
+    }
+
+    const paginatedData = allData.slice(startIdx, startIdx + limit);
+
+    return {
+        data: paginatedData,
+        total,
+        page,
+        limit,
+        totalPages
     };
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -13,13 +13,32 @@ interface DailyEntryModalProps {
     onClose: () => void
     onSave: (data: any) => void
     date?: Date | null
+    initialData?: any
 }
 
-export function DailyEntryModal({ isOpen, onClose, onSave, date }: DailyEntryModalProps) {
+export function DailyEntryModal({ isOpen, onClose, onSave, date, initialData }: DailyEntryModalProps) {
     const [hours, setHours] = useState(0)
     const [project, setProject] = useState("")
     const [typeOfWork, setTypeOfWork] = useState("")
     const [description, setDescription] = useState("")
+
+    useEffect(() => {
+        if (isOpen && initialData) {
+            setHours(initialData.hours || 0)
+            setProject(initialData.projectName || "")
+            // Assuming initialData might not have typeOfWork, or it sits in description etc.
+            // For now we assume the data object passed in has these fields.
+            // Adjust based on actual data structure if needed.
+            setTypeOfWork(initialData.typeOfWork || "")
+            setDescription(initialData.description || "")
+        } else if (isOpen && !initialData) {
+            // Reset for new entry
+            setHours(0)
+            setProject("")
+            setTypeOfWork("")
+            setDescription("")
+        }
+    }, [isOpen, initialData])
 
     const handleSave = () => {
         // Basic validation
@@ -125,7 +144,7 @@ export function DailyEntryModal({ isOpen, onClose, onSave, date }: DailyEntryMod
                         className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-8 h-11 rounded-lg"
                         disabled={!project || !typeOfWork || !description}
                     >
-                        Add entry
+                        {initialData ? "Save changes" : "Add entry"}
                     </Button>
                     <Button
                         variant="outline"

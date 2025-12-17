@@ -55,7 +55,7 @@ export function PaginationCustom({ currentPage, totalPages, onPageChange }: Pagi
     };
 
     return (
-        <div className="flex w-[487px] h-[36px] rounded-md shadow-sm" aria-label="Pagination">
+        <div className="flex w-full max-w-[487px] h-[36px] rounded-md shadow-sm" aria-label="Pagination">
             <Button
                 variant="ghost"
                 className="flex-1 min-w-0 relative inline-flex items-center justify-center h-full px-3 text-sm font-medium text-gray-500 hover:text-gray-900 bg-white border border-[#E5E7EB] rounded-l-md rounded-r-none hover:bg-gray-50 focus:z-10 disabled:opacity-50"
